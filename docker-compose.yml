@@ -1,0 +1,21 @@
+services:
+  mcp-serveur:
+    build:
+      context: ./mcp-serveur
+    container_name: mcp-serveur
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mcp-serveur:/app 
+      - ./workspace:/workspace
+
+  agents:
+    build: ./agents
+    volumes:
+      - ./agents:/app
+    depends_on:
+      - mcp-serveur
+    env_file:
+      - .env
+    stdin_open: true
+    
